@@ -48,6 +48,7 @@
     "@/controllers": "dist/controllers",
     "@/interfaces": "dist/interfaces",
     "@/middleware": "dist/middleware",
+    "@/models": "dist/models",
     "@/services": "dist/services",
     "@/utils": "dist/utils",
     "@/validations": "dist/validations"

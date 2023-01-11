@@ -33,6 +33,7 @@
       "@/controllers/*" : ["controllers/*"],
       "@/interfaces/*" : ["interfaces/*"],
       "@/middleware/*" : ["middleware/*"],
+      "@/models/*" : ["models/*"],
       "@/services/*" : ["services/*"],
       "@/utils/*" : ["utils/*"],
       "@/validations/*" : ["validations/*"],
