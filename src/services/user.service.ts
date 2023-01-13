@@ -7,6 +7,7 @@ class UserService {
     //Register a new user
 
     public async register(
+        userId: string,
         name: string,
         dob: string,
         email: string,
@@ -18,6 +19,7 @@ class UserService {
     ): Promise<string | Error> {
         try {
             const user = await this.user.create({
+                userId,
                 name,
                 dob,
                 email,
@@ -30,7 +32,7 @@ class UserService {
 
             const accessToken = jwtToken.createToken(user);
 
-            return accessToken;
+            return userId;
         }
         catch (error) {
             throw new Error("error.message");

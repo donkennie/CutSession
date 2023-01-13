@@ -5,6 +5,7 @@ import exceptionMiddleware from '@/middleware/exception.middleware';
 import validator from '@/validations/user.validation';
 import UserService from '@/services/user.service';
 import authenticated from '@/middleware/authenticated.middleware'
+import { any } from 'joi';
 
 class UserController implements IController {
     public path = '/users';
@@ -37,9 +38,10 @@ class UserController implements IController {
         next: NextFunction
     ): Promise<Response | void> => {
         try {
-            const {name, dob, email, cityOfResidence, username, password, phoneNumber, metadata } = req.body;
+            const {userId, name, dob, email, cityOfResidence, username, password, phoneNumber, metadata } = req.body;
 
             const token = await this.UserService.register(
+                userId,
                 name,
                 dob,
                 email,
@@ -49,10 +51,40 @@ class UserController implements IController {
                 phoneNumber,
                 metadata,
             );
-            res.status(201).json({token});
+            res.status(201).json({userId: userId});
 
-        } catch (error) {
+        } catch (error:any) {
             next(new HttpException(400, error.message));
         }
     }
+
+    private login = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<Response | void> => {
+        try {
+            const {username, password, accessType} = req.body;
+
+            const token = await this.UserService.login(username, password, accessType);
+
+            res.status(200).json({token});
+        } catch (error:any) {
+            next(new HttpException(400, error.message));
+        }
+    };
+
+
+    private getUser = (
+        req: Request | any, 
+        res: Response,
+        next: NextFunction
+    ): Response | void => {
+        if(!req.user){
+            return next(new HttpException(404, 'No logged in user'));
+        }
+        res.status(200).send({ data: req.user });
+    }
 }
+
+export default UserController;
