@@ -41,10 +41,11 @@ class App {
     }
 
     private initialiseDatabaseConnection(): void {
-        const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
+        // const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
 
         mongoose.connect(
-            `mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`
+            // `mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`
+            `mongodb://127.0.0.1:27017/CutSession`
         );
     }
 
