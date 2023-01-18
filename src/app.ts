@@ -1,5 +1,5 @@
 import express, { Application } from 'express';
-import mongoose from 'mongoose';
+import Mongoose from 'mongoose';
 import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -7,6 +7,7 @@ import Controller from '@/interfaces/controller.interface';
 import ErrorMiddleware from '@/middleware/error.middleware';
 import helmet from 'helmet';
 
+// let database: Mongoose.Connection;
 class App {
     public express: Application;
     public port: number;
@@ -41,13 +42,14 @@ class App {
     }
 
     private initialiseDatabaseConnection(): void {
-        // const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
+        const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
 
-        mongoose.connect(
-            // `mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`
-            `mongodb://127.0.0.1:27017/CutSession`
-        );
+        // mongoose.set('useNewUrlParser', true)
+        // mongoose.set('useCreateIndex', true)
+        Mongoose.connect(
+            `mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`)
     }
+
 
     public listen(): void {
         this.express.listen(this.port, () => {

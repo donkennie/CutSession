@@ -20,6 +20,7 @@
     "@types/express": "^4.17.15",
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^9.0.1",
+    "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.4",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
@@ -43,8 +44,7 @@
     "jsonwebtoken": "^9.0.0",
     "module-alias": "^2.2.2",
     "mongoose": "^6.8.3",
-    "morgan": "^1.10.0",
-    "typeorm": "^0.2.28"
+    "morgan": "^1.10.0"
   },
   "_moduleAliases": {
     "@/controllers": "dist/controllers",
