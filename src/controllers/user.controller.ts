@@ -8,7 +8,7 @@ import authenticated from '@/middleware/authenticated.middleware'
 import { any } from 'joi';
 
 class UserController implements IController {
-    public path = '/users';
+    public path = '/register';
     public router = Router();
     private UserService = new UserService();
 
@@ -18,7 +18,7 @@ class UserController implements IController {
 
     private initialiseRoutes(): void {
         this.router.post(
-            `${this.path}/register/`,
+            `${this.path}/users`,
             exceptionMiddleware(validator.register),
             this.register
 

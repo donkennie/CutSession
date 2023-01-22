@@ -41,15 +41,19 @@ class App {
         this.express.use(ErrorMiddleware);
     }
 
+
+    
     private initialiseDatabaseConnection(): void {
-        const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
 
-        // mongoose.set('useNewUrlParser', true)
-        // mongoose.set('useCreateIndex', true)
-        Mongoose.connect(
-            `mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`)
-    }
+         const { MONGO_PATH } = process.env;
 
+         Mongoose.connect(
+            `${MONGO_PATH}`
+         ).then(() => {
+            console.log('DB connection successful');
+          });
+               
+        }
 
     public listen(): void {
         this.express.listen(this.port, () => {
@@ -59,3 +63,4 @@ class App {
 }
 
 export default App;
+
