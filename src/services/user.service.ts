@@ -1,13 +1,13 @@
 import UserModel from "@/models/user.model";
 import jwtToken from '@/utils/jwtToken';
+import {ObjectId} from 'mongodb';
 
 class UserService {
     private user = UserModel;
-
     //Register a new user
 
     public async register(
-        userId: string,
+        _id: ObjectId,
         name: string,
         dob: string,
         email: string,
@@ -18,8 +18,8 @@ class UserService {
         metadata: object,
     ): Promise<string | Error> {
         try {
-            const user = await this.user.create({
-                userId,
+            const newUser = await this.user.create({
+                _id: new ObjectId(),
                 name,
                 dob,
                 email,
@@ -30,9 +30,9 @@ class UserService {
                 metadata,
             });
 
-            const accessToken = jwtToken.createToken(user);
-
-            return userId;
+            const accessToken = jwtToken.createToken(newUser);
+           // return newUser.ins
+            return newUser._id.toHexString();
         }
         catch (error) {
             throw new Error("error.message");

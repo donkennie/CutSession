@@ -1,7 +1,7 @@
 import {Document} from 'mongoose';
-
+import {ObjectId} from 'mongodb';
 export default interface IUser extends Document {
-    userId: string;
+    _id: ObjectId,
     name: string;
     dob: string;
     email: string;

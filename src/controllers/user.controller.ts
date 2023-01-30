@@ -6,6 +6,7 @@ import validator from '@/validations/user.validation';
 import UserService from '@/services/user.service';
 import authenticated from '@/middleware/authenticated.middleware'
 import { any } from 'joi';
+import {ObjectId} from 'mongodb';
 
 class UserController implements IController {
     public path = '/register';
@@ -38,10 +39,10 @@ class UserController implements IController {
         next: NextFunction
     ): Promise<Response | void> => {
         try {
-            const {userId, name, dob, email, cityOfResidence, username, password, phoneNumber, metadata } = req.body;
+            const {_id, name, dob, email, cityOfResidence, username, password, phoneNumber, metadata } = req.body;
 
-            const token = await this.UserService.register(
-                userId,
+            const newUser = await this.UserService.register(
+                _id,
                 name,
                 dob,
                 email,
@@ -51,7 +52,7 @@ class UserController implements IController {
                 phoneNumber,
                 metadata,
             );
-            res.status(201).json({userId: userId});
+            res.status(201).json(newUser);
 
         } catch (error:any) {
             next(new HttpException(400, error.message));
