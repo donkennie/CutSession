@@ -1,6 +1,7 @@
 import UserModel from "@/models/user.model";
 import jwtToken from '@/utils/jwtToken';
 import {ObjectId} from 'mongodb';
+import bcrypt from 'bcrypt';
 
 class UserService {
     private user = UserModel;
@@ -18,6 +19,13 @@ class UserService {
         metadata: object,
     ): Promise<string | Error> {
         try {
+
+            const existingUser = await UserModel.findOne({ email });
+            if (existingUser)
+            throw new Error("User already exists.");
+
+            const hashedPassword = await bcrypt.hash(password, 12);
+
             const newUser = await this.user.create({
                 _id: new ObjectId(),
                 name,
@@ -25,7 +33,7 @@ class UserService {
                 email,
                 cityOfResidence,
                 username,
-                password,
+                password: hashedPassword,
                 phoneNumber,
                 metadata,
             });
@@ -47,7 +55,7 @@ class UserService {
         ): Promise<string | Error>{
 
             try {
-                const user = await this.user.findOne({ username });
+                const user = await this.user.findOne({ username })
 
                 if (!user) {
                     throw new Error('Unable to find user with that username');
