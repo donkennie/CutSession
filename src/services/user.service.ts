@@ -3,6 +3,12 @@ import jwtToken from '@/utils/jwtToken';
 import {ObjectId} from 'mongodb';
 import bcrypt from 'bcrypt';
 
+
+enum UserType {
+    USER = 'user',
+    MERCHANT = 'merchant',
+  }
+
 class UserService {
     private user = UserModel;
     //Register a new user
