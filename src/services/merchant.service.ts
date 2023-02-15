@@ -1,6 +1,8 @@
-import MerchantModel from "@/models/user.model";
+import MerchantModel from "@/models/merchant.model";
 import jwtToken from '@/utils/jwtToken';
 import {ObjectId} from 'mongodb';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 class MerchantService {
     private merchant = MerchantModel;
@@ -17,22 +19,34 @@ class MerchantService {
         metadata: object,
     ): Promise<string | Error> {
         try {
+
+            
+            const existingMerchant = await MerchantModel.findOne({ email });
+            if (existingMerchant)
+            throw new Error("Merchant already exists.");
+
+            const hashedPassword = await bcrypt.hash(password, 12);
+
             const newMerchant = await this.merchant.create({
                 _id: new ObjectId(),
                 name,
                 email,
                 cityOfOperation,
                 username,
-                password,
+                password: hashedPassword,
                 phoneNumber,
                 metadata,
             });
 
-            const accessToken = jwtToken.createToken(newMerchant);
+            const token = jwt.sign(
+                { email: newMerchant.email, id: newMerchant._id }, process.env.JWT_SECRET as jwt.Secret,
+                { expiresIn: "3d" }
+              );
+
             return newMerchant._id.toHexString();
         }
         catch (error) {
-            throw new Error("error.message");
+            throw new Error( "Something went wrong" );
         }
     }
 

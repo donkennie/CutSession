@@ -59,4 +59,4 @@ MerchantSchema.methods.isValidPassword = async function (
     return await bcrypt.compare(password, this.password);
 };
 
-export default model<IMerchant>('User', MerchantSchema);
+export default model<IMerchant>('Merchant', MerchantSchema);
