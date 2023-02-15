@@ -52,7 +52,7 @@ class UserController implements IController {
                 phoneNumber,
                 metadata,
             );
-            res.status(201).json(newUser);
+            res.status(201).json({userId: newUser});
 
         } catch (error:any) {
             next(new HttpException(400, error.message));

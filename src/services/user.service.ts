@@ -31,7 +31,6 @@ class UserService {
             });
 
             const accessToken = jwtToken.createToken(newUser);
-           // return newUser.ins
             return newUser._id.toHexString();
         }
         catch (error) {
