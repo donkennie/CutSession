@@ -31,8 +31,6 @@ class UserService {
             if (existingUser)
             throw new Error("User already exists.");
 
-           // const hashedPassword = await bcrypt.hash(password, 12);
-
             const newUser = await this.user.create({
                 _id: new ObjectId(),
                 name,
@@ -40,7 +38,7 @@ class UserService {
                 email,
                 cityOfResidence,
                 username,
-                password,//: hashedPassword,
+                password,
                 phoneNumber,
                 metadata,
             });
@@ -55,32 +53,6 @@ class UserService {
 
     //login an authenticated user
 
-   /*     public async login(
-            username: string,
-            password: string,
-            accessType: string
-        ): Promise<string | Error>{
-
-            try {
-                
-                const user = await this.user.findOne({ username })
-
-                if (!user) {
-                    throw new Error('Unable to find user with that username');
-                }
-
-                if(await user.isValidPassword(password)){
-                    return jwtToken.createToken(user);
-                }
-
-                else{
-                    throw new Error('Wrong credentials given');
-                }
-            } catch (error) {
-                throw new Error('Unable to create user');
-            }
-        }
-*/
 
         public async createUser(username: string,
         password: string,
@@ -88,22 +60,24 @@ class UserService {
     ): Promise<string | Error>{
         {
             try {
-                const user = await this.user.findOne({ username })
+            const user = await this.user.findOne({ username })
+            
+            if (!user) {
+                throw new Error('Unable to find user with that username');
+            }
+            
+            if(await user.isValidPassword(password)){
+                const token = jwtToken.createToken(user);
+                return user._id.toHexString();
+            }
 
-                if (!user) {
-                    throw new Error('Unable to find user with that username');
-                }
+            else{
+                throw new Error('Wrong credentials given');
+            }
+        }
 
-                if(await user.isValidPassword(password)){
-                   // console.log(user.password == password);
-                    return jwtToken.createToken(user);
-                   // return {token: token, userId: user.id, merchantId: user.merchantId  }
-                }
+            catch (error) {
 
-                else{
-                    throw new Error('Wrong credentials given');
-                }
-            } catch (error) {
                 throw new Error("Something went wrong");
             }
         }
@@ -126,7 +100,7 @@ public async createMerchant(username: string,
                     { email: merchant.email, id: merchant._id }, process.env.JWT_SECRET as jwt.Secret,
                     { expiresIn: "3d" }
                     );
-                return token;
+                return merchant._id.toHexString();
             }
 
             else{

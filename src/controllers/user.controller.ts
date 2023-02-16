@@ -75,10 +75,15 @@ class UserController implements IController {
             if (accessType === UserType.USER) {
                 // Handle user login
                 const userLogin = await this.UserService.createUser(username, password, accessType);
+                if(!userLogin) res.status(400).json({ success: false, message: 'Wrong Credentials' });
+
+                res.status(201).json({userId: userLogin, merchantId: null});
 
               } else if (accessType === UserType.MERCHANT) {
                 // Handle merchant login
-                const userLogin = await this.UserService.createMerchant(username, password, accessType);
+                const merchantLogin = await this.UserService.createMerchant(username, password, accessType);
+                res.status(201).json({merchantId: merchantLogin, userId: null});
+
               } else {
                 res.status(400).json({ success: false, message: 'Invalid user type' });
               }
