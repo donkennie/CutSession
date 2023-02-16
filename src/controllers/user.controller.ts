@@ -8,6 +8,11 @@ import authenticated from '@/middleware/authenticated.middleware'
 import { any } from 'joi';
 import {ObjectId} from 'mongodb';
 
+
+enum UserType {
+    USER = 'USER',
+    MERCHANT = 'MERCHANT',
+  }
 class UserController implements IController {
     public path = '/register';
     public router = Router();
@@ -26,7 +31,7 @@ class UserController implements IController {
         );
         
         this.router.post(
-            `${this.path}/login`,
+            `/sign-in`,
             exceptionMiddleware(validator.login),
             this.login
         );
@@ -67,9 +72,20 @@ class UserController implements IController {
         try {
             const {username, password, accessType} = req.body;
 
-            const token = await this.UserService.login(username, password, accessType);
+            if (accessType === UserType.USER) {
+                // Handle user login
+                const userLogin = await this.UserService.createUser(username, password, accessType);
 
-            res.status(200).json({token});
+              } else if (accessType === UserType.MERCHANT) {
+                // Handle merchant login
+                const userLogin = await this.UserService.createMerchant(username, password, accessType);
+              } else {
+                res.status(400).json({ success: false, message: 'Invalid user type' });
+              }
+
+            // res.status(200).json({
+            //     token: token,
+            // });
         } catch (error:any) {
             next(new HttpException(400, error.message));
         }
