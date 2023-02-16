@@ -64,4 +64,4 @@ UserSchema.methods.isValidPassword = async function (
     return await bcrypt.compare(password, this.password);
 };
 
-export default model<IUser>('User', UserSchema);
+export default model<IUser>('User', UserSchema);                                                                                                                                                                                                                                                                                                 
