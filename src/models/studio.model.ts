@@ -2,8 +2,8 @@ import { Schema, model } from 'mongoose';
 import IStudio from '@/interfaces/studio.interface';
 
 enum Type{
-    WEEKDAY = 'Weekday',
-    WEEKEND = 'Weekend',
+    WEEKDAY = 'WeekDay',
+    WEEKEND = 'WeekEnd',
 }
 
 const StudioSchema = new Schema(

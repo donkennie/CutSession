@@ -68,7 +68,7 @@ class UserService {
             
             if(await user.isValidPassword(password)){
                 const token = jwtToken.createToken(user);
-                return user._id.toHexString();
+                return token;
             }
 
             else{
@@ -100,7 +100,7 @@ public async createMerchant(username: string,
                     { email: merchant.email, id: merchant._id }, process.env.JWT_SECRET as jwt.Secret,
                     { expiresIn: "3d" }
                     );
-                return merchant._id.toHexString();
+                return token;//merchant._id.toHexString();
             }
 
             else{

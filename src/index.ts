@@ -4,11 +4,12 @@ import validateEnv from '@/utils/validateEnv';
 import App from './app';
 import UserController from '@/controllers/user.controller'
 import MerchantController from '@/controllers/merchant.controller'
+import StudioController from './controllers/studio.controller';
 
 validateEnv();
 
 const app = new App(
-    [new UserController(), new MerchantController()],
+    [new UserController(), new MerchantController(), new StudioController()],
     Number(process.env.PORT)
 );
 
