@@ -3,7 +3,7 @@ import {ObjectId} from 'mongodb';
 
 export default interface IStudio extends Document {
     _id: ObjectId,
-    startAt: string,
-    endAt: string,
+    startsAt: string,
+    endsAt: string,
     type: string
 }

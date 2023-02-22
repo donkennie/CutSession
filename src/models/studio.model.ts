@@ -8,21 +8,21 @@ enum Type{
 
 const StudioSchema = new Schema(
     {
-        startAt: {
+        startsAt: {
             type: Date,
-            required: true,
+           required: true,
         },
 
-        endAt: {
+        endsAt: {
             type: Date,
-            required: true,
+           required: true,
         },
 
         type: {
             type: String,
-            enum: [Type.WEEKDAY, Type.WEEKEND],
-            default: Type.WEEKDAY,
-            required: true
+           enum: [Type.WEEKDAY, Type.WEEKEND],
+           default: Type.WEEKDAY,
+           required: true
         }
 
     },

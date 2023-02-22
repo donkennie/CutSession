@@ -3,6 +3,7 @@ import IController from '@/interfaces/controller.interface';
 import HttpException from '@/utils/exceptions/http.exception';
 import exceptionMiddleware from '@/middleware/exception.middleware';
 import studioModel from '@/models/studio.model';
+import merchantModel from '@/models/merchant.model';
 import authenticated from '@/middleware/authenticated.middleware';
 import StudioService from '@/services/studio.service';
 import validator from '@/validations/studio.validator';
@@ -19,12 +20,12 @@ class StudioController implements IController {
 
     private initialiseRoutes(): void {
         this.router.post(
-            `${this.path}/studios`,
+            `${this.path}/studios/:merchantId`,
             exceptionMiddleware(validator.studio ),
             this.createStudioSession
         );
     
-        this.router.get(`${this.path}/studios`, this.getStudioSessions)
+        this.router.get(`${this.path}/studios/:merchantId`, this.getStudioSessions)
     }
 
     private getStudioSessions = async(
@@ -33,9 +34,20 @@ class StudioController implements IController {
         next: NextFunction
     ): Promise<Response | void> => {
         try {
-            const getAllStudioSessions = await this.StudioService.getStudio(req.params.id);
-            
-            res.status(201).json({getAllStudioSessions});
+
+            const merchant = await merchantModel.findById(req.params.merchantId);
+            if(!merchant)
+            {
+                res.status(404).json("No merchant found with this Id");
+            }
+
+           const fetchStudio = await studioModel.find();
+
+           if(fetchStudio === null){
+            res.status(404).json("Not found")
+           }        
+            res.status(201).json(fetchStudio);
+
         } catch (error:any) {
             next(new HttpException(400, error.message));
         }
@@ -48,13 +60,16 @@ class StudioController implements IController {
         next: NextFunction
     ): Promise<Response | void> => {
         try {
-           const merchantId = req.params.id;
             const {_id, startsAt, endsAt, type} = req.body;
+            const merchant = await merchantModel.findById(req.params.merchantId);
+            if(!merchant)
+            {
+                res.status(404).json("No merchant found with this Id");
+            }
             const createStudioSessions = await this.StudioService.createStudio(
-                _id,
-                merchantId,
+               _id,
                 startsAt,
-                endsAt, 
+                endsAt,
                 type
                 );
             
