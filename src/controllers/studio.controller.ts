@@ -41,12 +41,17 @@ class StudioController implements IController {
                 res.status(404).json("No merchant found with this Id");
             }
 
-           const fetchStudio = await studioModel.find();
+            const fetchStudio = await studioModel.find({}, { __v: 0 }).lean();
+            const studios = fetchStudio.map((studio) => ({
+              ...studio,
+              merchantId: merchant?._id,
+            }));
 
-           if(fetchStudio === null){
-            res.status(404).json("Not found")
-           }        
-            res.status(201).json(fetchStudio);
+            if (studios.length === 0) {
+                return res.status(404).json("No studios found");
+              }
+          
+              return res.status(201).json(studios);
 
         } catch (error:any) {
             next(new HttpException(400, error.message));
@@ -60,7 +65,7 @@ class StudioController implements IController {
         next: NextFunction
     ): Promise<Response | void> => {
         try {
-            const {_id, startsAt, endsAt, type} = req.body;
+            const {_id, merchantId, startsAt, endsAt, type} = req.body;
             const merchant = await merchantModel.findById(req.params.merchantId);
             if(!merchant)
             {
@@ -68,6 +73,7 @@ class StudioController implements IController {
             }
             const createStudioSessions = await this.StudioService.createStudio(
                _id,
+               merchantId,
                 startsAt,
                 endsAt,
                 type

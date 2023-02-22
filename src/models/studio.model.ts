@@ -27,9 +27,6 @@ const StudioSchema = new Schema(
 
     },
 
-    {
-        timestamps: true,
-    }
 );
 
 export default model<IStudio>('Studio', StudioSchema); 

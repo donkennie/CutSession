@@ -54,10 +54,10 @@ class UserService {
     //login an authenticated user
 
 
-        public async createUser(username: string,
+        public async AuthenticateUser(username: string,
         password: string,
         accessType: string
-    ): Promise<string | Error>{
+    ): Promise<{ token: string; userId: string } | Error>{
         {
             try {
             const user = await this.user.findOne({ username })
@@ -68,7 +68,7 @@ class UserService {
             
             if(await user.isValidPassword(password)){
                 const token = jwtToken.createToken(user);
-                return token;
+                return {token, userId: user._id.toString()};
             }
 
             else{
@@ -83,10 +83,10 @@ class UserService {
         }
     }
 
-public async createMerchant(username: string,
+public async AuthenticateMerchant(username: string,
     password: string,
     accessType: string
-): Promise<string | Error>{
+): Promise<{ token: string; merchantId: string } | Error> {
     {
         try {
             const merchant = await this.merchant.findOne({ username })
@@ -100,7 +100,7 @@ public async createMerchant(username: string,
                     { email: merchant.email, id: merchant._id }, process.env.JWT_SECRET as jwt.Secret,
                     { expiresIn: "3d" }
                     );
-                return token;//merchant._id.toHexString();
+                    return { token, merchantId: merchant._id.toString() };
             }
 
             else{

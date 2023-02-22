@@ -28,6 +28,7 @@ class StudioService {
 
     public async createStudio(
         _id: ObjectId,
+        merchantId: string, 
         startsAt: string,
         endsAt: string,
         type: string
@@ -37,6 +38,7 @@ class StudioService {
 
             const createStudio = await this.studio.create({
                 _id: new ObjectId(),
+                merchantId,
                 startsAt,
                 endsAt,
                 type
