@@ -35,7 +35,6 @@ class StudioService {
     ): Promise<string | Error>
     {
        try {
-
             const createStudio = await this.studio.create({
                 _id: new ObjectId(),
                 merchantId,

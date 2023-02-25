@@ -87,10 +87,7 @@ class UserController implements IController {
               } else {
                 res.status(400).json({ success: false, message: 'Invalid user type' });
               }
-
-            // res.status(200).json({
-            //     token: token,
-            // });
+              
         } catch (error:any) {
             next(new HttpException(400, error.message));
         }
