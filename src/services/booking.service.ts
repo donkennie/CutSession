@@ -11,6 +11,7 @@ class BookingService{
         userId: string,
         notes: string,
         title: string,
+      // bookingRef: string
 
     ): Promise<string | Error>{
         try {
@@ -21,7 +22,8 @@ class BookingService{
                 date,
                 userId,
                 notes,
-                title
+                title,
+             //   bookingRef: ""
             })
 
             return bookSession._id.toHexString();

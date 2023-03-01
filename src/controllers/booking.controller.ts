@@ -40,19 +40,11 @@ class StudioController implements IController {
                 notes,
                 title,              
             )
-
-            // const book = booking.map((bookStudio) => ({
-            //     bookingId: booking
-            //     bookingRef: bookStudio.booking
-            //   }));
-  
-              if (book.length === 0) {
-                  return res.status(404).json("No studios found");
-                }
-
-            res.status(201).json({bookingId: booking, bookingRef: B});
-        } catch (error) {
+             
+            res.status(201).json({bookingId: booking});
             
+        } catch (error) {
+            return res.status(404).json("No studios found");          
         }
     }
 }
