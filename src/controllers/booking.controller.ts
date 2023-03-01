@@ -6,7 +6,7 @@ import BookingService from '@/services/booking.service';
 import validator from '@/validations/booking.validator';
 import BookingSchema from '@/models/booking.model';
 
-class StudioController implements IController {
+class BookingController implements IController {
     public path = '/api';
     public router = Router();
     private BookingService = new BookingService();
@@ -17,7 +17,7 @@ class StudioController implements IController {
 
     private initialiseRoutes(): void {
         this.router.post(
-            `${this.path}/studios/:merchantId`,
+            `${this.path}/bookings`,
             exceptionMiddleware(validator.booking ),
             this.bookStudioSession
         );
@@ -31,20 +31,23 @@ class StudioController implements IController {
         next: NextFunction
     ): Promise<Response | void> => {
         try {
-            const {_id, sessionId, date, userId, notes, title} = req.body;
+            const {_id, sessionId, date, userId, notes, title,bookingRef} = req.body;
             const booking = await this.BookingService.BookStudioSession(
                 _id,
                 sessionId,
                 date,
                 userId,
                 notes,
-                title,              
+                title,  
+                bookingRef,            
             )
              
-            res.status(201).json({bookingId: booking});
+            res.status(201).json({booking});
             
         } catch (error) {
-            return res.status(404).json("No studios found");          
+            return res.status(404).json("Error found from the request!");          
         }
     }
 }
+
+export default BookingController;

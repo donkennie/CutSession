@@ -25,15 +25,13 @@ class MerchantService {
             if (existingMerchant)
             throw new Error("Merchant already exists.");
 
-           // const hashedPassword = await bcrypt.hash(password, 12);
-
             const newMerchant = await this.merchant.create({
                 _id: new ObjectId(),
                 name,
                 email,
                 cityOfOperation,
                 username,
-                password,//: hashedPassword,
+                password,
                 phoneNumber,
                 metadata,
             });

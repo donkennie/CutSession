@@ -24,7 +24,6 @@ const BookingSchema = new Schema(
         },
         bookingRef:{
             type: String,
-            default: generateRandomString()
         },
         title:{
             type: String
