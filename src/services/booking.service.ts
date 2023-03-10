@@ -50,16 +50,16 @@ class BookingService{
         }
     }
 
-    // public async RetriveBookSession(
+    public async RetriveBookSession(
 
-    // ): Promise<string | Error>{
+    ): Promise<string | Error>{
 
-    //     try {
-            
-    //     } catch () {
-            
-    //     }
-    // }
+        try {
+            return "null";
+        } catch (error) {
+            throw new Error('Unable to retrive studio')
+        }
+    }
 }
 
 export default BookingService;
