@@ -27,9 +27,10 @@ class UserService {
     ): Promise<string | Error> {
         try {
 
-            const existingUser = await UserModel.findOne({ email });
-            if (existingUser)
-            throw new Error("User already exists.");
+            const existingUser = await this.user.findOne({ email });
+            if (existingUser != null){
+                throw new Error("User already exists.");
+            }
 
             const newUser = await this.user.create({
                 _id: new ObjectId(),
@@ -47,7 +48,7 @@ class UserService {
             return newUser._id.toHexString();
         }
         catch (error) {
-            throw new Error("error.message");
+            throw new Error("You've entered wrong credentials");
         }
     }
 

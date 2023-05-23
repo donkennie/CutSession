@@ -26,9 +26,10 @@ class UserService {
     register(_id, name, dob, email, cityOfResidence, username, password, phoneNumber, metadata) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const existingUser = yield user_model_1.default.findOne({ email });
-                if (existingUser)
+                const existingUser = yield this.user.findOne({ email });
+                if (existingUser != null) {
                     throw new Error("User already exists.");
+                }
                 const newUser = yield this.user.create({
                     _id: new mongodb_1.ObjectId(),
                     name,
@@ -44,7 +45,7 @@ class UserService {
                 return newUser._id.toHexString();
             }
             catch (error) {
-                throw new Error("error.message");
+                throw new Error("You've entered wrong credentials");
             }
         });
     }
