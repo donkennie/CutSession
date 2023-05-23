@@ -20,7 +20,7 @@ class StudioController implements IController {
 
     private initialiseRoutes(): void {
         this.router.post(
-            `$/studios/:merchantId`,
+            `/studios/:merchantId`,
             exceptionMiddleware(validator.studio ),
             this.createStudioSession
         );

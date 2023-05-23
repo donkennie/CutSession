@@ -58,7 +58,7 @@ class StudioController {
         this.initialiseRoutes();
     }
     initialiseRoutes() {
-        this.router.post(`$/studios/:merchantId`, (0, exception_middleware_1.default)(studio_validator_1.default.studio), this.createStudioSession);
+        this.router.post(`/studios/:merchantId`, (0, exception_middleware_1.default)(studio_validator_1.default.studio), this.createStudioSession);
         this.router.get(`/studios/:merchantId`, this.getStudioSessions);
     }
 }
