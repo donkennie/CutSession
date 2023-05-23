@@ -7,7 +7,7 @@ import validator from '@/validations/booking.validator';
 import BookingSchema from '@/models/booking.model';
 
 class BookingController implements IController {
-    public path = '/api';
+    public path = '/';
     public router = Router();
     private BookingService = new BookingService();
 
@@ -17,12 +17,12 @@ class BookingController implements IController {
 
     private initialiseRoutes(): void {
         this.router.post(
-            `${this.path}/bookings`,
+            `/bookings`,
             exceptionMiddleware(validator.booking ),
             this.bookStudioSession
         );
     
-         this.router.get(`${this.path}/bookings/:merchantId`, this.RetrivedBookSession)
+         this.router.get(`/bookings/:merchantId`, this.RetrivedBookSession)
     }
 
     private bookStudioSession = async(
