@@ -27,7 +27,15 @@ const BookingSchema = new Schema(
         },
         title:{
             type: String
+        },
+
+        endsAt:{
+            type: Date,
+        },
+        startsAt:{
+            type: Date,
         }
+
 
     }
 )

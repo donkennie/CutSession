@@ -22,7 +22,7 @@ class BookingController implements IController {
             this.bookStudioSession
         );
     
-        // this.router.get(`${this.path}/studios/:merchantId`, this.getStudioSessions)
+         this.router.get(`${this.path}/bookings/:merchantId`, this.RetrivedBookSession)
     }
 
     private bookStudioSession = async(
@@ -46,6 +46,28 @@ class BookingController implements IController {
             
         } catch (error) {
             return res.status(404).json("Error found from the request!");          
+        }
+    }
+
+    private RetrivedBookSession = async (
+        req: Request,
+        res: Response,
+    ): Promise<Response | void> => {
+        try {
+            const {city, limit, offset, period} = req.query;
+            const merchantId = req.params.merchantId;
+
+            const result = await this.BookingService.RetriveBookSession({
+                city: city as string,
+                offset: parseInt(offset as string),
+                limit: parseInt(limit as string),
+                period: period as string,
+                merchantId
+            });
+
+            res.status(200).json(result);
+        } catch (error) {
+            
         }
     }
 }

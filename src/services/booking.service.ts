@@ -3,11 +3,15 @@ import {ObjectId} from 'mongodb';
 import generateRandomString from '@/utils/randomGenerator';
 import StudioModel from "@/models/studio.model";
 import UserModel from "@/models/user.model";
+import { IQueryParameterBookingSession } from "@/interfaces/queryParameterBookingSession";
+import MerchantModel from "@/models/merchant.model";
+import IBooking from "@/interfaces/booking.interface";
 
 class BookingService{
     private bookings = BookingModel;
     private studios = StudioModel;
     private users = UserModel;
+    private merchants = MerchantModel;
 
     public async BookStudioSession(
         _id: ObjectId,
@@ -51,12 +55,23 @@ class BookingService{
     }
 
     public async RetriveBookSession(
-
-    ): Promise<string | Error>{
-
+        payload: IQueryParameterBookingSession
+    ): Promise<object[] | Error>{
         try {
-            return "null";
-        } catch (error) {
+            const {city, period, offset, merchantId, limit} = payload;
+            const checkMerchantId = await this.merchants.findById(merchantId);
+            if(!checkMerchantId){
+                throw new Error("Not found with the merchant Id provided.");
+            }
+
+            const bookingSession = await this.bookings.find({
+                merchantId,
+                city
+            }).skip((offset - 1) * 50)
+            .limit( limit < 50 ? limit : 50)
+
+            return bookingSession;
+                } catch (error) {
             throw new Error('Unable to retrive studio')
         }
     }
