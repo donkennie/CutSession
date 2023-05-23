@@ -10,7 +10,7 @@ import validator from '@/validations/studio.validator';
 
 
 class StudioController implements IController {
-    public path = '/api';
+    public path = '/';
     public router = Router();
     private StudioService = new StudioService();
 
@@ -20,12 +20,12 @@ class StudioController implements IController {
 
     private initialiseRoutes(): void {
         this.router.post(
-            `${this.path}/studios/:merchantId`,
+            `$/studios/:merchantId`,
             exceptionMiddleware(validator.studio ),
             this.createStudioSession
         );
     
-        this.router.get(`${this.path}/studios/:merchantId`, this.getStudioSessions)
+        this.router.get(`/studios/:merchantId`, this.getStudioSessions)
     }
 
     private getStudioSessions = async(

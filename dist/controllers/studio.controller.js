@@ -21,7 +21,7 @@ const studio_service_1 = __importDefault(require("@/services/studio.service"));
 const studio_validator_1 = __importDefault(require("@/validations/studio.validator"));
 class StudioController {
     constructor() {
-        this.path = '/api';
+        this.path = '/';
         this.router = (0, express_1.Router)();
         this.StudioService = new studio_service_1.default();
         this.getStudioSessions = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
@@ -58,8 +58,8 @@ class StudioController {
         this.initialiseRoutes();
     }
     initialiseRoutes() {
-        this.router.post(`${this.path}/studios/:merchantId`, (0, exception_middleware_1.default)(studio_validator_1.default.studio), this.createStudioSession);
-        this.router.get(`${this.path}/studios/:merchantId`, this.getStudioSessions);
+        this.router.post(`$/studios/:merchantId`, (0, exception_middleware_1.default)(studio_validator_1.default.studio), this.createStudioSession);
+        this.router.get(`/studios/:merchantId`, this.getStudioSessions);
     }
 }
 exports.default = StudioController;
