@@ -33,14 +33,14 @@ class BookingController {
         });
         this.RetrivedBookSession = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const { city, limit, offset, period } = req.query;
-                const merchantId = req.params.merchantId;
+                const { city, limit, offset, period, merchantId } = req.query;
+                //const merchantId = req.params.merchantId;
                 const result = yield this.BookingService.RetriveBookSession({
                     city: city,
                     offset: parseInt(offset),
                     limit: parseInt(limit),
                     period: period,
-                    merchantId
+                    merchantId: merchantId
                 });
                 res.status(200).json(result);
             }
@@ -51,7 +51,7 @@ class BookingController {
     }
     initialiseRoutes() {
         this.router.post(`/bookings`, (0, exception_middleware_1.default)(booking_validator_1.default.booking), this.bookStudioSession);
-        this.router.get(`/bookings/:merchantId`, this.RetrivedBookSession);
+        this.router.get(`/bookings`, this.RetrivedBookSession);
     }
 }
 exports.default = BookingController;

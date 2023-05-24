@@ -59,11 +59,7 @@ class BookingService {
     RetriveBookSession(payload) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { city, period, offset, merchantId, limit } = payload;
-                const checkMerchantId = yield this.merchants.findById(merchantId);
-                if (!checkMerchantId) {
-                    throw new Error("Not found with the merchant Id provided.");
-                }
+                const { city, period, offset, limit, merchantId } = payload;
                 const bookingSession = yield this.bookings.find({
                     merchantId,
                     city

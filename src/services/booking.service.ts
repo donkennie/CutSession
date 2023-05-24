@@ -58,11 +58,7 @@ class BookingService{
         payload: IQueryParameterBookingSession
     ): Promise<object[] | Error>{
         try {
-            const {city, period, offset, merchantId, limit} = payload;
-            const checkMerchantId = await this.merchants.findById(merchantId);
-            if(!checkMerchantId){
-                throw new Error("Not found with the merchant Id provided.");
-            }
+            const {city, period, offset, limit, merchantId} = payload;
 
             const bookingSession = await this.bookings.find({
                 merchantId,

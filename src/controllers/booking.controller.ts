@@ -22,7 +22,7 @@ class BookingController implements IController {
             this.bookStudioSession
         );
     
-         this.router.get(`/bookings/:merchantId`, this.RetrivedBookSession)
+         this.router.get(`/bookings`, this.RetrivedBookSession)
     }
 
     private bookStudioSession = async(
@@ -54,15 +54,15 @@ class BookingController implements IController {
         res: Response,
     ): Promise<Response | void> => {
         try {
-            const {city, limit, offset, period} = req.query;
-            const merchantId = req.params.merchantId;
+            const {city, limit, offset, period, merchantId} = req.query;
+           //const merchantId = req.params.merchantId;
 
             const result = await this.BookingService.RetriveBookSession({
                 city: city as string,
                 offset: parseInt(offset as string),
                 limit: parseInt(limit as string),
                 period: period as string,
-                merchantId
+               merchantId : merchantId as string
             });
 
             res.status(200).json(result);
