@@ -2,7 +2,7 @@
 
 CutSession is an application by which user can schedule pre-wedding photo session and also book any sessions of their interests.
 
-![Uploading 2-logo-Open-Studio.jpg…]()
+![2-logo-Open-Studio](https://github.com/donkennie/CutSession/assets/88739172/c3cfea96-329e-40ac-9bef-548b98ebe402)
 
 
 ## **Features Implemented**
