@@ -46,7 +46,7 @@ following environment variables:
 - JWT_SECRET= **`jwt secret`**
 - NODE_ENV= **`stage of the project`**
 
-4. Run **`npm install`** to install the required packages.
+4. Run  **`npm install`**  to install the required packages.
 5. The API server will start running on http://localhost:3000. You can now send HTTP requests to the API endpoints.
 
 ## **Running**
