@@ -74,3 +74,22 @@ To generate API documentation using Postman, you can utilize the built-in featur
 - POST /bookings: `Book a studio session.`
 - GET /bookings?limit=3&offset=1
 
+
+## **Built With**
+
+- @types/bcrypt
+- @types/compression
+- @types/cors
+- @types/joi
+- @types/morgan
+- dotenv
+- @types/express
+- express-pino-logger
+- express-paginate
+- express-rate-limit
+- express-validator
+- @types/jsonwebtoken
+- @types/mongoose
+- tsc-watch
+- mongoose-unique-validator
+
