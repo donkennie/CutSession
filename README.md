@@ -2,6 +2,9 @@
 
 CutSession is an application by which user can schedule pre-wedding photo session and also book any sessions of their interests.
 
+![Uploading 2-logo-Open-Studio.jpg…]()
+
+
 ## **Features Implemented**
 
 > - Each endpoint clearly specifies any query/path parameter or request body, as well as the data types and constraints for each data field
